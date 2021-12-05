@@ -18,10 +18,9 @@ def get_unmarked(board, seen):
 
 
 def day4_p1(i, pos, boxes, seen, all_boxes=None):
-
-    if check(boxes[pos[0]], pos[2], seen, False) or check(
-        boxes[pos[0]], pos[1], seen, True
-    ):
+    cond1 = check(boxes[pos[0]], pos[2], seen, False)
+    cond2 = check(boxes[pos[0]], pos[1], seen, True)
+    if cond1 or cond2:
         return get_unmarked(boxes[pos[0]], seen) * i
     return None
 
