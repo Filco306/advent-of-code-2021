@@ -21,8 +21,8 @@ def findnum(lines: List[str], bitcrit: Callable) -> int:
     return int(lines[0], 2)
 
 
-def day_3(fname: str, task: int):
-    lines = read_day3(fname)
+def day_3(lines, task: int):
+    # lines = read_day3(fname)
     if task == 1:
         nums = []
         for i in range(len(lines[0])):
@@ -40,11 +40,12 @@ def day_3(fname: str, task: int):
 
 
 def main():
-    assert day_3("3_test.txt", 1) == 198
-    print(f'Part 1 : {day_3("3.txt",1)}')
+    test, inp = read_day3("3_test.txt"), read_day3("3.txt")
+    assert day_3(test, 1) == 198
+    print(f"Part 1 : {day_3(inp,1)}")
 
-    assert day_3("3_test.txt", 2) == 230
-    print(f'Part 2 : {day_3("3.txt",2)}')
+    assert day_3(test, 2) == 230
+    print(f"Part 2 : {day_3(inp,2)}")
 
 
 if __name__ == "__main__":

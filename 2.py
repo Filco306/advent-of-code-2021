@@ -1,9 +1,7 @@
 from utils import read_day2
 
 
-def day_2(fname: str, task: int) -> int:
-    insts = read_day2(fname)
-
+def day_2(insts, task: int) -> int:
     start = [0, 0]
     aim = 0
     for dir, step in insts:
@@ -16,10 +14,11 @@ def day_2(fname: str, task: int) -> int:
 
 
 def main():
-    assert day_2("2_test.txt", 1) == 150
-    print(f'Part 1 : {day_2("2.txt",1)}')
-    assert day_2("2_test.txt", 2) == 900
-    print(f'Part 2 : {day_2("2.txt",2)}')
+    test, inp = read_day2("2_test.txt"), read_day2("2.txt")
+    assert day_2(test, 1) == 150
+    print(f"Part 1 : {day_2(inp,1)}")
+    assert day_2(test, 2) == 900
+    print(f"Part 2 : {day_2(inp,2)}")
 
 
 if __name__ == "__main__":

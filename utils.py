@@ -3,7 +3,7 @@ from collections import defaultdict
 import numpy as np
 
 
-def read_int_list(fname: str):
+def read_day1(fname: str):
     with open(f"input/{fname}", "r") as f:
         test = [int(x.strip()) for x in f.readlines()]
     return test
@@ -21,7 +21,7 @@ def read_day3(fname: str) -> List[str]:
     return lines
 
 
-def read_day4inp(fname: str):
+def read_day4(fname: str):
     with open(f"input/{fname}", "r") as f:
         lines = f.readlines()
     inc = [int(x) for x in lines[0].strip().split(",")]

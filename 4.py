@@ -1,4 +1,4 @@
-from utils import read_day4inp
+from utils import read_day4
 
 
 def check(board, idx, seen, isrow: bool):
@@ -32,8 +32,8 @@ def day4_p2(i, pos, boxes, seen, cond1, cond2, all_boxes):
     return None
 
 
-def day4(fname: str, part: int) -> int:
-    inc, boxes, positions = read_day4inp(fname)
+def day4(inp, part: int) -> int:
+    inc, boxes, positions = inp
     seen = set()
     all_boxes = set(list(range(len(boxes)))) if part == 2 else None
     for i in inc:
@@ -47,10 +47,11 @@ def day4(fname: str, part: int) -> int:
 
 
 def main():
-    assert day4("4_test.txt", 1) == 4512
-    print(f'Part 1 : {day4("4.txt",1)}')
-    assert day4("4_test.txt", 2) == 1924
-    print(f'Part 2 : {day4("4.txt",2)}')
+    test, inp = read_day4("4_test.txt"), read_day4("4.txt")
+    assert day4(test, 1) == 4512
+    print(f"Part 1 : {day4(inp,1)}")
+    assert day4(test, 2) == 1924
+    print(f"Part 2 : {day4(inp,2)}")
 
 
 if __name__ == "__main__":
