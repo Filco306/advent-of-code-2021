@@ -38,7 +38,7 @@ def day4_p2(i, pos, boxes, seen, all_boxes):
     return None
 
 
-def day4(fname: str, part: int):
+def day4(fname: str, part: int) -> int:
     inc, boxes, positions = read_day4inp(fname)
     seen = set()
     all_boxes = set(list(range(len(boxes)))) if part == 2 else None
