@@ -1,14 +1,5 @@
 from collections import Counter
-
-
-def read_day5(fname: str):
-
-    with open(f"input/{fname}", "r") as f:
-        lines = [
-            [[int(z.strip()) for z in y.split(",")] for y in x.strip().split("->")]
-            for x in f.readlines()
-        ]
-    return lines
+from utils import read_day5
 
 
 def add_to_counter(start, end, idx, counter):

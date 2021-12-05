@@ -1,38 +1,10 @@
-import numpy as np
-from collections import defaultdict
+from utils import read_day4inp
 
 
-def read_day4inp(fname: str):
-    with open(f"input/{fname}", "r") as f:
-        lines = f.readlines()
-    inc = [int(x) for x in lines[0].strip().split(",")]
-    i = 1
-    boxes = []
-    positions = defaultdict(list)
-    while i < len(lines):
-        if lines[i] != "\n":
-            boxes.append(np.zeros((5, 5), dtype=np.int64))
-            for j in range(5):
-                nums = [int(x) for x in lines[i + j].strip().split(" ") if len(x) != 0]
-
-                boxes[-1][j] = nums
-                for k, num in enumerate(nums):
-                    positions[num].append((len(boxes) - 1, j, k))
-            i += 4
-        i += 1
-    return inc, boxes, positions
-
-
-def check_vert(board, col, seen):
-    for i in range(board.shape[1]):
-        if board[i][col] not in seen:
-            return False
-    return True
-
-
-def check_hori(board, row, seen):
-    for i in range(board.shape[1]):
-        if board[row][i] not in seen:
+def check(board, idx, seen, isrow: bool):
+    for i in range(board.shape[0]):
+        pos = (idx, i) if isrow else (i, idx)
+        if board[pos] not in seen:
             return False
     return True
 
@@ -45,37 +17,37 @@ def get_unmarked(board, seen):
     return tot
 
 
-def day4_p1(inc, boxes, positions):
-    seen = set()
+def day4_p1(i, pos, boxes, seen, all_boxes=None):
 
-    for i in inc:
-        seen.add(i)
-        for pos in positions[i]:
-            if check_vert(boxes[pos[0]], pos[2], seen) or check_hori(
-                boxes[pos[0]], pos[1], seen
-            ):
-                return get_unmarked(boxes[pos[0]], seen) * i
+    if check(boxes[pos[0]], pos[2], seen, False) or check(
+        boxes[pos[0]], pos[1], seen, True
+    ):
+        return get_unmarked(boxes[pos[0]], seen) * i
+    return None
 
 
-def day4_p2(inc, boxes, positions):
-    seen = set()
-    all_boxes = set(list(range(len(boxes))))
-    for i in inc:
-        seen.add(i)
-        for pos in positions[i]:
-            if pos[0] in all_boxes and (
-                check_vert(boxes[pos[0]], pos[2], seen)
-                or check_hori(boxes[pos[0]], pos[1], seen)
-            ):
-                all_boxes.remove(pos[0])
+def day4_p2(i, pos, boxes, seen, all_boxes):
+    if pos[0] in all_boxes and (
+        check(boxes[pos[0]], pos[2], seen, False)
+        or check(boxes[pos[0]], pos[1], seen, True)
+    ):
+        all_boxes.remove(pos[0])
 
-                if len(all_boxes) == 0:
-                    return get_unmarked(boxes[pos[0]], seen) * i
+        if len(all_boxes) == 0:
+            return get_unmarked(boxes[pos[0]], seen) * i
+    return None
 
 
 def day4(fname: str, part: int):
     inc, boxes, positions = read_day4inp(fname)
-    return eval(f"day4_p{part}")(inc, boxes, positions)
+    seen = set()
+    all_boxes = set(list(range(len(boxes)))) if part == 2 else None
+    for i in inc:
+        seen.add(i)
+        for pos in positions[i]:
+            res = eval(f"day4_p{part}")(i, pos, boxes, seen, all_boxes)
+            if res is not None:
+                return res
 
 
 def main():
