@@ -17,19 +17,14 @@ def get_unmarked(board, seen):
     return tot
 
 
-def day4_p1(i, pos, boxes, seen, all_boxes=None):
-    cond1 = check(boxes[pos[0]], pos[2], seen, False)
-    cond2 = check(boxes[pos[0]], pos[1], seen, True)
+def day4_p1(i, pos, boxes, seen, cond1, cond2, all_boxes=None):
     if cond1 or cond2:
         return get_unmarked(boxes[pos[0]], seen) * i
     return None
 
 
-def day4_p2(i, pos, boxes, seen, all_boxes):
-    if pos[0] in all_boxes and (
-        check(boxes[pos[0]], pos[2], seen, False)
-        or check(boxes[pos[0]], pos[1], seen, True)
-    ):
+def day4_p2(i, pos, boxes, seen, cond1, cond2, all_boxes):
+    if pos[0] in all_boxes and (cond1 or cond2):
         all_boxes.remove(pos[0])
 
         if len(all_boxes) == 0:
@@ -44,7 +39,9 @@ def day4(fname: str, part: int) -> int:
     for i in inc:
         seen.add(i)
         for pos in positions[i]:
-            res = eval(f"day4_p{part}")(i, pos, boxes, seen, all_boxes)
+            cond1 = check(boxes[pos[0]], pos[2], seen, False)
+            cond2 = check(boxes[pos[0]], pos[1], seen, True)
+            res = eval(f"day4_p{part}")(i, pos, boxes, seen, cond1, cond2, all_boxes)
             if res is not None:
                 return res
 

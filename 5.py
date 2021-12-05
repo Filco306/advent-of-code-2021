@@ -21,27 +21,24 @@ def add_diag(start, end, counter):
         startpos[1] += int(startpos[1] < endpos[1]) - int(startpos[1] > endpos[1])
 
 
-def day5(fname: str, only_hori_vert: bool):
+def day5(fname: str, task: int):
     lines = read_day5(fname)
     counter = Counter()
     for start, end in lines:
         if start[0] == end[0] or start[1] == end[1]:
-            # Then we have a horizontal or vertical line
-            if start[0] == end[0]:
-                add_to_counter(start, end, 0, counter)
-            else:
-                add_to_counter(start, end, 1, counter)
-        elif only_hori_vert is False:
-            # Otherwise it is a diagonal
+            add_to_counter(start, end, int(start[1] == end[1]), counter)
+        elif task == 2:
+            # Otherwise it is a diagonal and we should
+            # only do it if is task 2
             add_diag(start, end, counter)
     return sum([v >= 2 for v in counter.values()])
 
 
 def main():
-    assert day5("5_test.txt", True) == 5
-    print(f'Part 1 : {day5("5.txt", True)}')
-    assert day5("5_test.txt", False) == 12
-    print(f'Part 2 : {day5("5.txt", False)}')
+    assert day5("5_test.txt", 1) == 5
+    print(f'Part 1 : {day5("5.txt", 1)}')
+    assert day5("5_test.txt", 2) == 12
+    print(f'Part 2 : {day5("5.txt", 2)}')
 
 
 if __name__ == "__main__":
