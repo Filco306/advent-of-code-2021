@@ -1,0 +1,57 @@
+from collections import Counter
+
+
+def read_day5(fname: str):
+
+    with open(f"input/{fname}", "r") as f:
+        lines = [
+            [[int(z.strip()) for z in y.split(",")] for y in x.strip().split("->")]
+            for x in f.readlines()
+        ]
+    return lines
+
+
+def add_to_counter(start, end, idx, counter):
+    startpos, endpos = (
+        min(start[1 - idx], end[1 - idx]),
+        max(start[1 - idx], end[1 - idx]) + 1,
+    )
+    for i in range(startpos, endpos):
+        pos = (start[0], i) if idx == 0 else (i, start[1])
+        counter[pos] += 1
+
+
+def add_diag(start, end, counter):
+    positions = sorted([start, end])
+    startpos, endpos = positions.copy()
+    while startpos[0] <= endpos[0]:
+        counter[(startpos[0], startpos[1])] += 1
+        startpos[0] += 1
+        startpos[1] += int(startpos[1] < endpos[1]) - int(startpos[1] > endpos[1])
+
+
+def day5(fname: str, only_hori_vert: bool):
+    lines = read_day5(fname)
+    counter = Counter()
+    for start, end in lines:
+        if start[0] == end[0] or start[1] == end[1]:
+            # Then we have a horizontal or vertical line
+            if start[0] == end[0]:
+                add_to_counter(start, end, 0, counter)
+            else:
+                add_to_counter(start, end, 1, counter)
+        elif only_hori_vert is False:
+            # Otherwise it is a diagonal
+            add_diag(start, end, counter)
+    return sum([v >= 2 for v in counter.values()])
+
+
+def main():
+    assert day5("5_test.txt", True) == 5
+    print(f'Part 1 : {day5("5.txt", True)}')
+    assert day5("5_test.txt", False) == 12
+    print(f'Part 2 : {day5("5.txt", False)}')
+
+
+if __name__ == "__main__":
+    main()
