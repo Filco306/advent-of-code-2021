@@ -1,5 +1,5 @@
 from typing import List
-from collections import defaultdict
+from collections import defaultdict, Counter
 import numpy as np
 
 
@@ -50,3 +50,7 @@ def read_day5(fname: str):
             for x in f.readlines()
         ]
     return lines
+
+
+def read_day6(fname: str):
+    return Counter([int(x) for x in open(f"input/{fname}").read().split(",")])
