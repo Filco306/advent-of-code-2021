@@ -54,3 +54,7 @@ def read_day5(fname: str):
 
 def read_day6(fname: str):
     return Counter([int(x) for x in open(f"input/{fname}").read().split(",")])
+
+
+def read_day7(fname: str):
+    return [int(x) for x in open(f"input/{fname}", "r").read().strip().split(",")]
