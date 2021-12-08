@@ -58,3 +58,12 @@ def read_day6(fname: str):
 
 def read_day7(fname: str):
     return [int(x) for x in open(f"input/{fname}", "r").read().strip().split(",")]
+
+
+def read_day8(fname: str):
+    with open(f"input/{fname}", "r") as f:
+        inp = [
+            [z.strip().split(" ") for z in y]
+            for y in [x.strip().split("|") for x in f.readlines()]
+        ]
+    return inp

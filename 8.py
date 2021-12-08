@@ -1,13 +1,5 @@
 from collections import Counter
-
-
-def read_day8(fname: str):
-    with open(f"input/{fname}", "r") as f:
-        inp = [
-            [z.strip().split(" ") for z in y]
-            for y in [x.strip().split("|") for x in f.readlines()]
-        ]
-    return inp
+from utils import read_day8
 
 
 def find_one(lens, final, which):
