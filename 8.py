@@ -25,23 +25,17 @@ def one_epoch(digits, target):
 
     final = {}
     final["I"] = digs[7] - digs[1]
-    # First, find the 6
-    # It will be the one with one in common with 1
-    # and len 6
     digs[6] = find_69(1, lens, digs)
     digs[9] = find_69(4, lens, digs)
-
-    # Now find the zero
     for li in lens:
         if len(li) == 6 and li not in [digs[6], digs[9]]:
             digs[0] = li
             break
-
-    final["II"] = digs[4] - final["III"].union(final["IIII"]).union(final["IIIIII"])
     final["III"] = digs[8] - digs[6]
     final["IIII"] = digs[8] - digs[0]
-    final["IIIII"] = digs[8] - digs[9]
     final["IIIIII"] = digs[1].intersection(digs[6]) - final["III"]
+    final["II"] = digs[4] - final["III"].union(final["IIII"]).union(final["IIIIII"])
+    final["IIIII"] = digs[8] - digs[9]
     final["IIIIIII"] = digs[8] - set().union(*list(final.values()))
 
     for f in final:
