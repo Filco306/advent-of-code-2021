@@ -23,14 +23,15 @@ def bfs(i, j, mat):
         r, c = queue.popleft()
 
         for dir in dirs:
+            r_, c_ = r + dir[0], c + dir[1]
             if (
-                0 <= r + dir[0] < len(mat)
-                and 0 <= c + dir[1] < len(mat[0])
-                and mat[r + dir[0]][c + dir[1]] >= mat[r][c]
-                and mat[r + dir[0]][c + dir[1]] != 9
-                and (r + dir[0], c + dir[1]) not in visited
+                0 <= r_ < len(mat)
+                and 0 <= c_ < len(mat[0])
+                and mat[r_][c_] >= mat[r][c]
+                and mat[r_][c_] != 9
+                and (r_, c_) not in visited
             ):
-                queue.append((r + dir[0], c + dir[1]))
+                queue.append((r_, c_))
         visited.add((r, c))
     return len(visited)
 
