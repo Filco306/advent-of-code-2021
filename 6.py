@@ -1,8 +1,9 @@
 from collections import Counter
 from utils import read_day6
+from typing import List
 
 
-def one_epoch(curr: Counter):
+def one_epoch(curr: Counter) -> Counter:
 
     new = Counter()
     for days, freq in curr.items():
@@ -14,7 +15,7 @@ def one_epoch(curr: Counter):
     return new
 
 
-def day6(inp, n_days: int):
+def day6(inp: List[int], n_days: int) -> int:
     curr = inp
     for i in range(n_days):
         curr = one_epoch(curr)

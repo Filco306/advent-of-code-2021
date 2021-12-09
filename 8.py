@@ -1,5 +1,6 @@
 from collections import Counter
 from utils import read_day8
+from typing import List
 
 
 def find_one(lens, final, which):
@@ -14,7 +15,7 @@ def find_69(inter, lens, digs):
             return li
 
 
-def one_epoch(digits, target):
+def one_epoch(digits: List[int], target: List[int]):
     lens = [set(list(x)) for x in digits]
     digs = {}
     for i, numlen in [(1, 2), (4, 4), (7, 3), (8, 7)]:
@@ -60,7 +61,7 @@ def one_epoch(digits, target):
     return int("".join(out))
 
 
-def day8(inp, task: int):
+def day8(inp: List[List[int]], task: int) -> int:
     if task == 1:
         tot = 0
         c_ = Counter([len(x) for x in inp[0][0]])

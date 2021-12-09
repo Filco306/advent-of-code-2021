@@ -1,9 +1,10 @@
 from collections import deque
 import heapq
 from math import prod
+from typing import List, Tuple
 
 
-def is_low_point(i, j, mat):
+def is_low_point(i: int, j: int, mat: List[List[str]]) -> bool:
     dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
     return all(
         [
@@ -14,7 +15,7 @@ def is_low_point(i, j, mat):
     )
 
 
-def bfs(i, j, mat):
+def bfs(i: int, j: int, mat: List[List[str]]) -> int:
     visited = set()
     queue = deque()
     queue.append((i, j))
@@ -36,7 +37,7 @@ def bfs(i, j, mat):
     return len(visited)
 
 
-def day9(inp, task: int):
+def day9(inp: str, task: int) -> Tuple[int, int]:
     matrix = [[int(y) for y in x] for x in inp.split("\n")]
     n, m = len(matrix), len(matrix[0])
     minheap = []

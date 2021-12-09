@@ -2,7 +2,7 @@ from utils import read_day7
 import numpy as np
 
 
-def eulersum(n):
+def eulersum(n: int) -> int:
     return n * (n + 1) // 2
 
 
