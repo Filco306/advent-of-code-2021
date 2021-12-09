@@ -1,10 +1,10 @@
 from collections import deque
 import heapq
+from math import prod
 
 
 def is_low_point(i, j, mat):
     dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-
     return all(
         [
             mat[i][j] < mat[i + dir[0]][j + dir[1]]
@@ -15,10 +15,8 @@ def is_low_point(i, j, mat):
 
 
 def bfs(i, j, mat):
-
     visited = set()
     queue = deque()
-
     queue.append((i, j))
     dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
     while len(queue) > 0:
@@ -40,34 +38,22 @@ def bfs(i, j, mat):
 def day9(inp, task: int):
     matrix = [[int(y) for y in x] for x in inp.split("\n")]
     n, m = len(matrix), len(matrix[0])
-    if task == 1:
-        tot = 0
-        for i in range(n):
-            for j in range(m):
-                tot += (matrix[i][j] + 1) * int(is_low_point(i, j, matrix))
-
-        return tot
-    else:
-        minheap = []
-        heapq.heapify(minheap)
-        heapq.heappush(minheap, 0)
-        all_basins = []
-        for i in range(n):
-            for j in range(m):
-                if is_low_point(i, j, matrix):
-                    basinsize = bfs(i, j, matrix)
-                    all_basins.append(basinsize)
-                    if len(minheap) < 3:
-                        heapq.heappush(minheap, basinsize)
-                    else:
-                        elem = heapq.heappop(minheap)
-                        maxelem = max(elem, basinsize)
-                        heapq.heappush(minheap, maxelem)
-        ans = 1
-        while len(minheap) > 0:
-            elem = heapq.heappop(minheap)
-            ans *= elem
-        return ans
+    minheap = []
+    heapq.heapify(minheap)
+    heapq.heappush(minheap, 0)
+    tot = 0
+    for i in range(n):
+        for j in range(m):
+            if is_low_point(i, j, matrix):
+                tot += matrix[i][j] + 1
+                basinsize = bfs(i, j, matrix)
+                if len(minheap) < 3:
+                    heapq.heappush(minheap, basinsize)
+                else:
+                    elem = heapq.heappop(minheap)
+                    maxelem = max(elem, basinsize)
+                    heapq.heappush(minheap, maxelem)
+    return tot, prod(minheap)
 
 
 def main():
@@ -75,10 +61,10 @@ def main():
         open("input/9_test.txt", "r").read()[:-1],
         open("input/9.txt", "r").read()[:-1],
     )
-    assert day9(test, 1) == 15
-    print(f"Part 1 : {day9(inp,1)}")
-    assert day9(test, 2) == 1134
-    print(f"Part 2 : {day9(inp,2)}")
+    assert day9(test, 1)[0] == 15
+    print(f"Part 1 : {day9(inp,1)[0]}")
+    assert day9(test, 2)[1] == 1134
+    print(f"Part 2 : {day9(inp,2)[1]}")
 
 
 if __name__ == "__main__":
