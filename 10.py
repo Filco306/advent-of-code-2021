@@ -27,12 +27,8 @@ def day10(inp: str) -> Tuple[int, int]:
                     newscore *= 5
                     newscore += closescores[corr[stack.pop()]]
                 heapq.heappush(minheap, newscore)
-    i = 0
-    idx = len(minheap) // 2
-    while i < idx:
+    for _ in range(len(minheap) // 2):
         heapq.heappop(minheap)
-        i += 1
-
     return tot, heapq.heappop(minheap)
 
 
