@@ -9,9 +9,9 @@ def day10(inp: str) -> Tuple[int, int]:
     tot = 0
     minheap = []
     heapq.heapify(minheap)
-    for j, line in enumerate(inp.split("\n")):
+    for line in inp.split("\n"):
         stack = []
-        for i, char in enumerate(line):
+        for char in line:
 
             if char in corr:
                 stack.append(char)
