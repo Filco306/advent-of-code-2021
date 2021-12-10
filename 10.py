@@ -1,7 +1,8 @@
 import heapq
+from typing import Tuple
 
 
-def day10(inp):
+def day10(inp: str) -> Tuple[int, int]:
     corr = {"{": "}", "(": ")", "[": "]", "<": ">"}
     points = {")": 3, "]": 57, "}": 1197, ">": 25137}
     closescores = {")": 1, "]": 2, "}": 3, ">": 4}
